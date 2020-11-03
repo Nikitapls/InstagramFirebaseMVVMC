@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="18G103" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="PostEntity" representedClassName="PostEntity" syncable="YES">
+        <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
+        <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserEntity" inverseName="posts" inverseEntity="UserEntity"/>
+        <relationship name="picture" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="PostImage" inverseName="post" inverseEntity="PostImage"/>
+    </entity>
+    <entity name="PostImage" representedClassName="PostImage" syncable="YES">
+        <attribute name="picture" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <relationship name="post" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PostEntity" inverseName="picture" inverseEntity="PostEntity"/>
+    </entity>
+    <entity name="UserEntity" representedClassName="UserEntity" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="uid" optional="YES" attributeType="String"/>
+        <relationship name="followers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UserEntity"/>
+        <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="PostEntity" inverseName="owner" inverseEntity="PostEntity"/>
+        <relationship name="profilePhoto" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserProfilePhoto" inverseName="user" inverseEntity="UserProfilePhoto"/>
+        <relationship name="profilePhotoCompressed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserProfilePhotoCompressed" inverseName="user" inverseEntity="UserProfilePhotoCompressed"/>
+        <relationship name="subcriptions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UserEntity"/>
+    </entity>
+    <entity name="UserProfilePhoto" representedClassName="UserProfilePhoto" syncable="YES">
+        <attribute name="picture" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <relationship name="compressedSize" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserProfilePhotoCompressed" inverseName="originalSize" inverseEntity="UserProfilePhotoCompressed"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserEntity" inverseName="profilePhoto" inverseEntity="UserEntity"/>
+    </entity>
+    <entity name="UserProfilePhotoCompressed" representedClassName="UserProfilePhotoCompressed" syncable="YES">
+        <attribute name="picture" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <relationship name="originalSize" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserProfilePhoto" inverseName="compressedSize" inverseEntity="UserProfilePhoto"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserEntity" inverseName="profilePhotoCompressed" inverseEntity="UserEntity"/>
+    </entity>
+    <elements>
+        <element name="PostEntity" positionX="283.171875" positionY="-210.9921875" width="128" height="103"/>
+        <element name="PostImage" positionX="539.7578125" positionY="-200.8515625" width="128" height="73"/>
+        <element name="UserEntity" positionX="105.64453125" positionY="-257.8046875" width="128" height="148"/>
+        <element name="UserProfilePhoto" positionX="53.53515625" positionY="-14.7109375" width="128" height="88"/>
+        <element name="UserProfilePhotoCompressed" positionX="-150.77734375" positionY="-125.07421875" width="128" height="88"/>
+    </elements>
+</model>
