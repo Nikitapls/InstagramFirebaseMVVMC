@@ -12,7 +12,11 @@ UIKit
 
 Firebase
 
+Realm
+
 NSURLSession
+
+NSOperation
 
 GCD
 
