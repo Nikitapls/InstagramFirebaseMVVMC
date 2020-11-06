@@ -14,7 +14,7 @@ protocol UserSearchViewModelProtocol {
     var searchButtonClicked: PublishRelay<Void> { get }
     var userSelected: PublishRelay<User> { get }
     
-    var outputUsersObservable: Observable<UserWithProfileImage> { get }
+    var outputUsersObservable: Observable<[UserWithProfileImage]> { get }
 }
 
 class UserSearchViewModel {
@@ -140,7 +140,7 @@ class UserSearchViewModel {
 }
 
 extension UserSearchViewModel: UserSearchViewModelProtocol {
-    var outputUsersObservable: Observable<UserWithProfileImage> {
+    var outputUsersObservable: Observable<[UserWithProfileImage]> {
         return outputUsers.asObservable()
     }
 }

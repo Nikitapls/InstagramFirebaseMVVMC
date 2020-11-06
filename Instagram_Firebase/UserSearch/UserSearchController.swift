@@ -18,9 +18,9 @@ class UserSearchController: UICollectionViewController {
     private let cellId = "cellId"
     private var usersInfo = [UserWithProfileImage]()
     
-    private var viewModel: UserSearchViewModel
+    private var viewModel: UserSearchViewModelProtocol
     
-    init(collectionViewLayout layout: UICollectionViewLayout, viewModel: UserSearchViewModel) {
+    init(collectionViewLayout layout: UICollectionViewLayout, viewModel: UserSearchViewModelProtocol) {
         self.viewModel = viewModel
         super.init(collectionViewLayout: layout)
     }
@@ -53,7 +53,7 @@ class UserSearchController: UICollectionViewController {
     
     private func bindUI() {
         
-        viewModel.outputUsers.subscribe(onNext: { [weak self] (users) in
+        viewModel.outputUsersObservable.subscribe(onNext: { [weak self] (users) in
             self?.usersInfo = users
             DispatchQueue.main.async { [weak self] in
                 self?.collectionView.reloadData()
