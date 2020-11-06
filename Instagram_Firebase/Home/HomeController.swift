@@ -13,9 +13,9 @@ import RxSwift
 class HomeController: UICollectionViewController {
     
     private let disposeBag = DisposeBag()
-    let cellId = "cellId"
-    let postsProvider: PostsProvider? = FirebaseService()
-    var postsWithPostAndUserImages = [PostWithPostAndUserImage]()
+    private let cellId = "cellId"
+    private let postsProvider: PostsProvider? = FirebaseService()
+    private var postsWithPostAndUserImages = [PostWithPostAndUserImage]()
     private var viewModel: HomeFeedViewModel
     
     init(collectionViewLayout: UICollectionViewFlowLayout, homeViewModel: HomeFeedViewModel) {
@@ -44,7 +44,7 @@ class HomeController: UICollectionViewController {
     }
     
     private func bindUI() {
-        viewModel.outputPosts.subscribe(onNext: { [weak self] (postsWithPostAndUserImages) in
+        viewModel.outputPostsObservable.subscribe(onNext: { [weak self] (postsWithPostAndUserImages) in
             self?.postsWithPostAndUserImages = postsWithPostAndUserImages
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()

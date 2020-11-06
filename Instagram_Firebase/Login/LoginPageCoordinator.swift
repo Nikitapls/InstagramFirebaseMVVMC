@@ -32,7 +32,7 @@ class LoginPageCoordinator: LoginPageCoordinatorProtocol {
     
     func start() {
         let loginViewController = LoginController(viewModel: LoginPageViewModel(coordinator: self))
-        loginNavController.pushViewController(loginViewController, animated: true)
+        loginNavController.pushViewController(loginViewController, animated: false) // false?
         window.rootViewController = loginNavController
         window.makeKeyAndVisible()
     }

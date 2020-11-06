@@ -9,6 +9,19 @@
 import RxSwift
 import RxCocoa
 
+protocol UserProfileViewModelProtocol {
+    // MARK: - Inputs
+    var userInput: PublishRelay<UserProfileViewModel.UserType> { get }
+    var logOutButtonClicked: PublishRelay<Void> { get }
+    var editProfileFollowButtonClicked: PublishRelay<Void> { get }
+    var loadTrigger: PublishRelay<Void> { get }
+    
+    // MARK: - Outputs
+    var currentUserObservable: Observable<UserWithProfileImage> { get }
+    var currentUserStatusObservable: Observable<UserStatus> { get }
+    var outputPostsObservable: Observable<[PostWithPostImage]> { get }
+}
+
 class UserProfileViewModel {
     
     private enum MyError: Error {
@@ -209,4 +222,16 @@ class UserProfileViewModel {
 
 }
 
-
+extension UserProfileViewModel: UserProfileViewModelProtocol {
+    var currentUserObservable: Observable<UserWithProfileImage> {
+        return currentUser.asObservable()
+    }
+    
+    var currentUserStatusObservable: Observable<UserStatus> {
+        return currentUserStatus.asObservable()
+    }
+    
+    var outputPostsObservable: Observable<[PostWithPostImage]> {
+        return outputPosts.asObservable()
+    }
+}

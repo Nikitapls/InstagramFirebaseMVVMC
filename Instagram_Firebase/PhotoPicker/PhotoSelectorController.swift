@@ -32,7 +32,7 @@ class PhotoSelectorContoller: UICollectionViewController {
     fileprivate var images = [UIImage]()
     fileprivate var assets = [PHAsset]()
     fileprivate var hightQualityImages = [Int: UIImage]()
-    var selectedImage: UIImage?
+    private var selectedImage: UIImage?
     
     fileprivate func fetchPhotos() {
         let width = (view.frame.width - 3) / 4

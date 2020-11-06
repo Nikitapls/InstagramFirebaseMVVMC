@@ -18,12 +18,12 @@ class UserProfileController: UICollectionViewController {
     }
     
     private let disposeBag = DisposeBag()
-    private let viewModel: UserProfileViewModel
+    private let viewModel: UserProfileViewModelProtocol
     private var userStatus: UserStatus?
     private var userWithProfileImage: UserWithProfileImage?
     private var postsWithPostImages = [PostWithPostImage]()
     
-    init(collectionViewLayout layout: UICollectionViewLayout, viewModel: UserProfileViewModel) {
+    init(collectionViewLayout layout: UICollectionViewLayout, viewModel: UserProfileViewModelProtocol) {
         self.viewModel = viewModel
         super.init(collectionViewLayout: layout)
         setupLogOutButton()
@@ -78,7 +78,7 @@ class UserProfileController: UICollectionViewController {
     }
     
     private func setupBindings() {
-        viewModel.currentUser.subscribe(onNext: { [weak self] (userWithProfileImage) in
+        viewModel.currentUserObservable.subscribe(onNext: { [weak self] (userWithProfileImage) in
             self?.userWithProfileImage = userWithProfileImage
             DispatchQueue.main.async {
                 self?.navigationItem.title = userWithProfileImage.user.name
@@ -86,7 +86,7 @@ class UserProfileController: UICollectionViewController {
             }
         }).disposed(by: disposeBag)
         
-        viewModel.currentUserStatus.subscribe(onNext: { [weak self] (status) in
+        viewModel.currentUserStatusObservable.subscribe(onNext: { [weak self] (status) in
             self?.userStatus = status
             DispatchQueue.main.async {
                 guard let self = self else { return }
@@ -97,7 +97,7 @@ class UserProfileController: UICollectionViewController {
             }
         }).disposed(by: disposeBag)
         
-        viewModel.outputPosts.subscribe(onNext: { [weak self] (postsWithPostImages) in
+        viewModel.outputPostsObservable.subscribe(onNext: { [weak self] (postsWithPostImages) in
             self?.postsWithPostImages = postsWithPostImages
             DispatchQueue.main.async { [weak self] in
                 self?.collectionView.reloadData()

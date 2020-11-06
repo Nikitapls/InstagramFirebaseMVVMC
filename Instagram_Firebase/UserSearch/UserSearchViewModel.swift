@@ -9,7 +9,13 @@ import UIKit.UIImage
 import RxSwift
 import RxCocoa
 
-
+protocol UserSearchViewModelProtocol {
+    var textDidChange: PublishRelay<String?> { get }
+    var searchButtonClicked: PublishRelay<Void> { get }
+    var userSelected: PublishRelay<User> { get }
+    
+    var outputUsersObservable: Observable<UserWithProfileImage> { get }
+}
 
 class UserSearchViewModel {
     
@@ -23,7 +29,7 @@ class UserSearchViewModel {
     private var coordinator: UserSearchCoordinatorProtocol?
     private let loadFromDBProvider: LoadFromDatabaseProvider = RealmService(currentUIDProvider: FirebaseService())
     // Output
-    var outputUsers: BehaviorRelay<[UserWithProfileImage]> = BehaviorRelay<[UserWithProfileImage]>(value: [])
+    let outputUsers: BehaviorRelay<[UserWithProfileImage]> = BehaviorRelay<[UserWithProfileImage]>(value: [])
     
     // Input
     let textDidChange = PublishRelay<String?>()
@@ -131,4 +137,10 @@ class UserSearchViewModel {
         return filteredUsers
     }
     
+}
+
+extension UserSearchViewModel: UserSearchViewModelProtocol {
+    var outputUsersObservable: Observable<UserWithProfileImage> {
+        return outputUsers.asObservable()
+    }
 }

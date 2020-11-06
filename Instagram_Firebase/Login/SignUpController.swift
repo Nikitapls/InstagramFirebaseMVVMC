@@ -42,7 +42,7 @@ class SignUpController: UIViewController {
         textField.backgroundColor = UIColor(white: 0, alpha: 0.03)
         textField.borderStyle = .roundedRect
         textField.font = UIFont.systemFont(ofSize: 14)
-        
+        textField.autocapitalizationType = .none
         textField.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         return textField
     }()
@@ -53,7 +53,7 @@ class SignUpController: UIViewController {
         textField.backgroundColor = UIColor(white: 0, alpha: 0.03)
         textField.borderStyle = .roundedRect
         textField.font = UIFont.systemFont(ofSize: 14)
-        
+        textField.autocapitalizationType = .none
         textField.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         return textField
     }()
@@ -61,11 +61,10 @@ class SignUpController: UIViewController {
     let passwordTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Password"
-        //textField.isSecureTextEntry = true
         textField.backgroundColor = UIColor(white: 0, alpha: 0.03)
         textField.borderStyle = .roundedRect
         textField.font = UIFont.systemFont(ofSize: 14)
-        
+        textField.isSecureTextEntry = true
         textField.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         return textField
     }()
