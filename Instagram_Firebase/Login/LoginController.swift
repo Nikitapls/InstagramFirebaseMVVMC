@@ -11,10 +11,10 @@ import RxSwift
 import RxCocoa
 
 class LoginController: UIViewController {
-    private let viewModel: LoginPageViewModel
+    private let viewModel: LoginPageViewModelProtocol
     private let disposeBag = DisposeBag()
     
-    init(viewModel: LoginPageViewModel) {
+    init(viewModel: LoginPageViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -149,7 +149,7 @@ class LoginController: UIViewController {
             return userInput
             }.bind(to: viewModel.handleLogin).disposed(by: disposeBag)
         
-        viewModel.loginButtonIsActive.subscribe(onNext: { [weak self] (isActive) in
+        viewModel.loginButtonIsActiveObservable.subscribe(onNext: { [weak self] (isActive) in
             self?.handleLoginButtonIsActive(isActive: isActive)
         }).disposed(by: disposeBag)
         

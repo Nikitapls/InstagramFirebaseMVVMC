@@ -10,6 +10,14 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+protocol LoginPageViewModelProtocol {
+    var handleTextInputChange: PublishRelay<UserInput> { get }
+    var handleLogin: PublishRelay<UserInput> { get }
+    var signUp: PublishRelay<Void> { get }
+    // Outputs
+    var loginButtonIsActiveObservable: Observable<Bool> { get }
+}
+
 class LoginPageViewModel {
     private let disposeBag = DisposeBag()
     
@@ -50,4 +58,12 @@ class LoginPageViewModel {
             self?.coordinator.showSignUpController()
             }).disposed(by: disposeBag)
     }
+}
+
+extension LoginPageViewModel: LoginPageViewModelProtocol {
+    var loginButtonIsActiveObservable: Observable<Bool> {
+        return loginButtonIsActive.asObservable()
+    }
+    
+    
 }

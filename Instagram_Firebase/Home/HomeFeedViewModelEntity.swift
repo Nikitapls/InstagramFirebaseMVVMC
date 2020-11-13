@@ -10,11 +10,11 @@ import RxSwift
 import RxCocoa
 
 protocol HomeFeedViewModel {
-    var outputPosts: BehaviorRelay<[PostWithPostAndUserImage]> { get }
+    var outputPostsObservable: Observable<[PostWithPostAndUserImage]> { get }
     var loadTrigger: PublishSubject<Void> { get }
 }
 
-class HomeFeedViewModelEntity: HomeFeedViewModel {
+class HomeFeedViewModelEntity {
     private let disposeBag = DisposeBag()
     private let backendQueue = OperationQueue()
     private let dbQueue = OperationQueue()
@@ -64,5 +64,10 @@ class HomeFeedViewModelEntity: HomeFeedViewModel {
         }
         backendQueue.addOperation(loadPostsBackendOperation)
     }
+}
 
+extension HomeFeedViewModelEntity: HomeFeedViewModel {
+    var outputPostsObservable: Observable<[PostWithPostAndUserImage]> {
+        return outputPosts.asObservable()
+    }    
 }
